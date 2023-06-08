@@ -13,6 +13,6 @@ public interface equipoServicio {
 
     List<jugador> crearListaJugadores(equipo equipo);
     
-    jugador buscarJugador(List<equipo> equipos, String nomJugado);
+    void buscarJugadorXNom(List<equipo> equipos);
 
 }

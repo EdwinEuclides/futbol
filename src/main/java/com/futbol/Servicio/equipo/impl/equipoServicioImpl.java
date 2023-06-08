@@ -17,15 +17,14 @@ import com.futbol.domain.jugador;
 
 public final class equipoServicioImpl implements equipoServicio {
 
-    public void crearEquipos(List<equipo> lstEquipos)
-    {
-        Scanner sc= App.sc;
-        boolean salir =false;
+    public void crearEquipos(List<equipo> lstEquipos) {
+        Scanner sc = App.sc;
+        boolean salir = false;
         do {
             lstEquipos.add(this.crearEquipo());
             System.out.println("Desea crear otro Equipo?    0: No      1: Si :");
-            
-            if("0".equals(sc.nextLine()))
+
+            if ("0".equals(sc.nextLine()))
                 salir = true;
         } while (!salir);
     }
@@ -47,16 +46,19 @@ public final class equipoServicioImpl implements equipoServicio {
         entrenadorServicio entrServ = new entrenadorServicioImpl();
         entrenador entrenador = entrServ.crearEntreandor(equipo);
         equipo.setEntrenador(entrenador);
-        
+
         List<jugador> jugadoresList = this.crearListaJugadores(equipo);
         equipo.setJugadores(jugadoresList);
         return equipo;
     }
 
-
     @Override
-    public jugador buscarJugador(List<equipo> equipos, String nomJugado) {
+    public void buscarJugadorXNom(List<equipo> equipos) {
         jugador jEncontrado = null;
+        Scanner sc = App.sc;
+
+        System.out.println("Nombre del Jugador a buscar: ");
+        String nomJugado = sc.nextLine();
 
         for (equipo equipo : equipos) {
 
@@ -65,12 +67,16 @@ public final class equipoServicioImpl implements equipoServicio {
             for (jugador jugador : jugadors) {
                 if (jugador.getNombre().equals(nomJugado)) {
                     jEncontrado = jugador;
-                    return jEncontrado;
+                    break;
                 }
             }
         }
+//nombre, apellido, posición, si es capitán o no y el nombre de su equipo.
+        if(jEncontrado !=null){
+            System.out.println("Nombre: ${0} - Apellido: ${1} - ${2} capitán  - Equipo: ${3}", jEncontrado.getNombre(), jEncontrado.getApellido(), jEncontrado.isEsCapitan()? "Es":"No es");
+        }
 
-        return jEncontrado;
+
     }
 
     @Override
@@ -86,7 +92,7 @@ public final class equipoServicioImpl implements equipoServicio {
             if (j != null) {
                 lst.add(j);
             }
-            
+
             System.out.println("Agregar otro Jugador?    0: No      1: Si :");
             String siguienteJugador = sc.nextLine();
             salir = siguienteJugador.equals("0") ? true : false;

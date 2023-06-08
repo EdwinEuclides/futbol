@@ -102,33 +102,4 @@ public class App {
 
 */
 
-        /*
-         * equipo e = new equipo("River", LocalDate.now(), new entrenador("Muñeco",
-         * "Gallardo", 50));
-         * entrenador entr = e.getEntrenador();
-         * entr.setEquipo(e);
-         * 
-         * //jugador j = new jugado r(nom, ap, equipo, h, pos, canGoles, esCap,
-         * nroCamiseta);
-         * jugador J2 = new jugador("Viejo", "Plancente", e, 169, 2, 2, false, 2);
-         * jugador J1 = new jugador("Pato", "Fillol", e, 185, 1, 0, false, 1);
-         * jugador J3 = new jugador("Roberto", "Perfumo", e, 178, 3, 1, false, 3);
-         * jugador J4 = new jugador("Beto", "Alonso", e, 187, 4, 100, true, 41);
-         * jugador J5 = new jugador("Mario Alberto", "Kempes", e, 180, 5, 200, false,
-         * 5);
-         * 
-         * e.addJugador(J1);
-         * e.addJugador(J2);
-         * e.addJugador(J3);
-         * e.addJugador(J4);
-         * e.addJugador(J5);
-         * 
-         * System.out.println("Equipo: " + e.getNombre());
-         * System.out.println("Entrenador: " + e.getEntrenador().getApellido() + ", " +
-         * e.getEntrenador().getNombre());
-         * System.out.println("                       *****************");
-         * for (jugador j : e.getJugadores()) {
-         * System.out.println(j.getNombre() + ", " + j.getApellido() +
-         * " **** Cant de Goles: " + j.getCantGoles());
-         * }
-         */
+      
