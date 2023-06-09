@@ -19,4 +19,5 @@ public interface equipoServicio {
 
     void buscarEquipoCapitanEntrenadorXNom(List<equipo> equipos);
 
+    void EliminarEquipo(List<equipo> equipos);
 }

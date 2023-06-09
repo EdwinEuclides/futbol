@@ -20,11 +20,13 @@ public class entrenadorServicioImpl implements entrenadorServicio {
         String ap = sc.nextLine();
 
         boolean edadOk = false;
+        String sEdad = "";
         int edad = 0;
         do {
             System.out.println("Edad del Entrenador (debe ser un nro entero): ");
             if (sc.hasNextInt()) {
-                edad = sc.nextInt();
+                sEdad = sc.nextLine();
+                edad = Integer.parseInt(sEdad);
                 edadOk = true;
             }
 

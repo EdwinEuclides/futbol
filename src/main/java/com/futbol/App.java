@@ -44,7 +44,8 @@ public class App {
                 System.out.println("8 :  Salir."); // Finaliza la Aplicacion.
 
                 if (sc.hasNextInt()) {
-                    int nroElegido = sc.nextInt();
+                    String strElegido = sc.nextLine();
+                    int nroElegido = Integer.parseInt(strElegido);
                     if (nroElegido > 0 && nroElegido < 9) {
                         elecc = Menu.values()[nroElegido - 1];
                         eleccOk = true;
@@ -57,16 +58,16 @@ public class App {
 
             switch (elecc) {
                 case CrearEquipo:
-                    equipoServ.crearEquipos(EQUIPOS);
+                    equipoServ.crearEquipos(EQUIPOS); // 1
                     break;
                 case BuscarJugador:
-                    equipoServ.buscarJugadorXNom(EQUIPOS);
+                    equipoServ.buscarJugadorXNom(EQUIPOS); // 2
                     break;
                 case BuscarEquipo:
-                    equipoServ.buscarEquipoJugadoresXNom(EQUIPOS);
+                    equipoServ.buscarEquipoJugadoresXNom(EQUIPOS); // 3
                     break;
                 case BuscarEquipoYJugadores:
-                    System.out.println("BuscarEquipoYJugadores: " + elecc.toString());
+                    equipoServ.buscarEquipoCapitanEntrenadorXNom(EQUIPOS); // 4
                     break;
                 case EliminarEquipo:
                     System.out.println("EliminarEquipo: " + elecc.toString());

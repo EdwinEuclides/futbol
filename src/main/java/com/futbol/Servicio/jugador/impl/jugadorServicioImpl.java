@@ -9,17 +9,16 @@ import com.futbol.domain.jugador;
 
 public class jugadorServicioImpl implements jugadorServicio {
 
-
     @Override
     public jugador crearJugador(equipo equipo) {
         Scanner sc = App.sc;
 
-        System.out.println("Nombre:");
-        String nom = sc.nextLine();
-        
         System.out.println("Apellido:");
         String ap = sc.nextLine();
-        
+
+        System.out.println("Nombre:");
+        String nom = sc.nextLine();
+
         System.out.println("Altura:");
         String strH = sc.nextLine();
         int h = Integer.parseInt(strH);
@@ -34,16 +33,15 @@ public class jugadorServicioImpl implements jugadorServicio {
 
         System.out.println("Es Capitán \t (0: No \t 1: Si): ");
         String strEsCap = sc.nextLine();
-        boolean esCap = strEsCap.equals("0")? false:true;
+        boolean esCap = strEsCap.equals("0") ? false : true;
 
         System.out.println("Númeor de camiseta:");
         String strNroCam = sc.nextLine();
         int nroCamiseta = Integer.parseInt(strNroCam);
-        
-        jugador j = new jugador(nom, ap, equipo, h, pos, canGoles, esCap, nroCamiseta);
-                
-        
-        return j;
+
+        jugador jugador = new jugador(nom, ap, equipo, h, pos, canGoles, esCap, nroCamiseta);
+
+        return jugador;
     }
 
 }
