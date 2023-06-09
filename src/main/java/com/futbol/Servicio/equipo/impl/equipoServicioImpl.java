@@ -17,16 +17,16 @@ import com.futbol.domain.jugador;
 
 public final class equipoServicioImpl implements equipoServicio {
 
+    @Override
     public void crearEquipos(List<equipo> lstEquipos) {
         Scanner sc = App.sc;
-        boolean salir = false;
+        boolean crearOtro = true;
         do {
             lstEquipos.add(this.crearEquipo());
-            System.out.println("Desea crear otro Equipo?    0: No      1: Si :");
 
-            if ("0".equals(sc.nextLine()))
-                salir = true;
-        } while (!salir);
+            System.out.println("Desea crear otro Equipo?    0: No      1: Si :");
+            crearOtro = sc.nextLine().equals("1") ? true : false;
+        } while (crearOtro);
     }
 
     @Override
@@ -61,9 +61,7 @@ public final class equipoServicioImpl implements equipoServicio {
         String nomJugado = sc.nextLine();
 
         for (equipo equipo : equipos) {
-
             List<jugador> jugadors = equipo.getJugadores();
-
             for (jugador jugador : jugadors) {
                 if (jugador.getNombre().equals(nomJugado)) {
                     jEncontrado = jugador;
@@ -71,12 +69,16 @@ public final class equipoServicioImpl implements equipoServicio {
                 }
             }
         }
-//nombre, apellido, posición, si es capitán o no y el nombre de su equipo.
-        if(jEncontrado !=null){
-            System.out.println("Nombre: ${0} - Apellido: ${1} - ${2} capitán  - Equipo: ${3}", jEncontrado.getNombre(), jEncontrado.getApellido(), jEncontrado.isEsCapitan()? "Es":"No es");
-        }
 
-
+        if (jEncontrado != null) {
+            String msg = String.format("Nombre: %S - Apellido: %S - %S capitán  - Equipo: %S",
+                    jEncontrado.getNombre(),
+                    jEncontrado.getApellido(),
+                    (jEncontrado.getEsCapitan() ? "Es" : "No es"),
+                    jEncontrado.getEquipo().getNombre());
+            System.out.println(msg);
+        } else
+            System.out.println("No se encontró el jugador");
     }
 
     @Override
@@ -89,9 +91,9 @@ public final class equipoServicioImpl implements equipoServicio {
         System.out.println("\nAgregará ahora los datos de los jugadores del equipo.\n");
         do {
             jugador j = servicio.crearJugador(equipo);
-            if (j != null) {
+
+            if (j != null)
                 lst.add(j);
-            }
 
             System.out.println("Agregar otro Jugador?    0: No      1: Si :");
             String siguienteJugador = sc.nextLine();
@@ -99,6 +101,56 @@ public final class equipoServicioImpl implements equipoServicio {
         } while (!salir);
 
         return lst;
+    }
+
+    @Override
+    public void buscarEquipoJugadoresXNom(List<equipo> equipos) {
+
+        equipo equipo = buscarEquipoXNombre(equipos);
+
+        if (equipo != null) {
+            String msg = String.format("Nombre: %S - Entrenador: %S",
+                    equipo.getEntrenador().getApellido() + ", " + equipo.getNombre(),
+                    equipo.getEntrenador().getNombre());
+            System.out.println(msg);
+
+            for (jugador j : equipo.getJugadores())
+                System.out.println(j.toString());
+        } else
+            System.out.println("No se encontró el Equipo");
+    }
+
+    @Override
+    public void buscarEquipoCapitanEntrenadorXNom(List<equipo> equipos) {
+        equipo equipo = buscarEquipoXNombre(equipos);
+
+        if (equipo != null) {
+            jugador capitan = equipo.getCapitan();
+            String msg = String.format("Nombre: %S - Entrenador: %S - Capitan: ",
+                    equipo.getNombre(),
+                    equipo.getEntrenador().getApellido() + ", " + equipo.getNombre(),
+                    (capitan != null ? capitan.getApellido() + ", " + capitan.getNombre() : "Sin Capitan"));
+
+            System.out.println(msg);
+        } else
+            System.out.println("No se encontró el Equipo");
+    }
+
+    private equipo buscarEquipoXNombre(List<equipo> equipos) {
+        Scanner sc = App.sc;
+        equipo equipoEncontrado = null;
+
+        System.out.println("Nombre del Equipo a buscar: ");
+        String nomEquipo = sc.nextLine();
+
+        for (equipo equipo : equipos) {
+            if (equipo.getNombre().equals(nomEquipo)) {
+                equipoEncontrado = equipo;
+                break;
+            }
+        }
+
+        return equipoEncontrado;
     }
 
 }

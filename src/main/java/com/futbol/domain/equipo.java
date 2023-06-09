@@ -3,6 +3,7 @@ package com.futbol.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class equipo {
     private String nombre;
@@ -78,6 +79,19 @@ public class equipo {
     public void removeJugador(jugador jugador) {
         if (this.jugadores.contains(jugador))
             this.jugadores.remove(jugador);
+    }
+
+    public jugador getCapitan() {
+        jugador jEncontr = null;
+
+        for (jugador jugador : jugadores) {
+            if (jugador.getEsCapitan()) {
+                jEncontr = jugador;
+                break;
+            }
+        }
+
+        return jEncontr;
     }
 
 }

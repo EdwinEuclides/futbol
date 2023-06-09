@@ -7,7 +7,7 @@ public class jugador extends miembro {
     private int cantGoles;
     private boolean esCapitan;
     private int nroCamiseta;
-    
+
     public jugador(String nombre, String apellido, int altura, int posicion, int cantGoles, boolean esCapitan,
             int nroCamiseta) {
         super(nombre, apellido);
@@ -27,7 +27,6 @@ public class jugador extends miembro {
         this.esCapitan = esCapitan;
         this.nroCamiseta = nroCamiseta;
     }
-
 
     public int getAltura() {
         return altura;
@@ -53,7 +52,7 @@ public class jugador extends miembro {
         this.cantGoles = cantGoles;
     }
 
-    public boolean isEsCapitan() {
+    public boolean getEsCapitan() {
         return esCapitan;
     }
 
@@ -71,8 +70,9 @@ public class jugador extends miembro {
 
     @Override
     public String toString() {
-        return "jugador [id=" + this.getId() + ", altura=" + altura + ", posicion=" + posicion + ", cantGoles=" + cantGoles
-                + ", esCapitan=" + esCapitan + ", nroCamiseta=" + nroCamiseta + "]";
+        return "jugador: " + this.getApellido() + ", " + this.getNombre() + ", Altura: " + altura + ", posicion: "
+                + posicion + ", cantGoles: " + cantGoles + (esCapitan ? ", Es Capitan" : "") + ", nroCamiseta: "
+                + nroCamiseta;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class jugador extends miembro {
         if (getClass() != obj.getClass())
             return false;
         jugador other = (jugador) obj;
-        if(this.getId() != other.getId())
+        if (this.getId() != other.getId())
             return false;
         if (altura != other.altura)
             return false;
@@ -112,10 +112,4 @@ public class jugador extends miembro {
         return true;
     }
 
-   
-   
-    
-    
-
-    
 }
