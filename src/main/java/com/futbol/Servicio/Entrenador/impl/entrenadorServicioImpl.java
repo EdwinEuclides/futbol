@@ -13,11 +13,11 @@ public class entrenadorServicioImpl implements entrenadorServicio {
     public entrenador crearEntreandor(equipo equipo) {
         Scanner sc = App.sc;
 
-        System.out.println("Nombre del Entrenador:");
-        String nom = sc.nextLine();
-
         System.out.println("Apellido del Entrenador:");
         String ap = sc.nextLine();
+
+        System.out.println("Nombre del Entrenador:");
+        String nom = sc.nextLine();
 
         boolean edadOk = false;
         String sEdad = "";

@@ -9,5 +9,5 @@ public interface accesoADatosServicio {
 
     List<jugador> importarJugadores(List<equipo> equipos);
 
-    List<jugador> exportarJugadores(List<equipo> equipos);
+    void exportarJugadores(List<equipo> equipos);
 }

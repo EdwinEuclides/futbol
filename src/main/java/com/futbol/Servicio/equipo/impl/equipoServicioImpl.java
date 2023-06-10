@@ -79,13 +79,14 @@ public final class equipoServicioImpl implements equipoServicio {
         jugador jEncontrado = null;
         Scanner sc = App.sc;
 
-        System.out.println("Nombre del Jugador a buscar: ");
+        System.out.println("Nombre (Apellido, Nombres) del Jugador a buscar: ");
         String nomJugado = sc.nextLine();
 
         for (equipo equipo : equipos) {
             List<jugador> jugadors = equipo.getJugadores();
             for (jugador jugador : jugadors) {
-                if (jugador.getNombre().equals(nomJugado)) {
+
+                if (nomJugado.equals(jugador.getApellido() + ", " + jugador.getNombre())) {
                     jEncontrado = jugador;
                     break;
                 }
@@ -93,9 +94,9 @@ public final class equipoServicioImpl implements equipoServicio {
         }
 
         if (jEncontrado != null) {
-            String msg = String.format("Nombre: %S - Apellido: %S - %S capitán  - Equipo: %S",
-                    jEncontrado.getNombre(),
+            String msg = String.format("Apellido: %S \nNombre: %S \n%S capitán \nEquipo: %S",
                     jEncontrado.getApellido(),
+                    jEncontrado.getNombre(),
                     (jEncontrado.getEsCapitan() ? "Es" : "No es"),
                     jEncontrado.getEquipo().getNombre());
             System.out.println(msg);
@@ -109,9 +110,11 @@ public final class equipoServicioImpl implements equipoServicio {
         equipo equipo = buscarEquipoXNombre(equipos);
 
         if (equipo != null) {
+            entrenador entrenador = equipo.getEntrenador();
             String msg = String.format("Equipo: %S - Entrenador: %S\nJugadores\n",
                     equipo.getNombre(),
-                    equipo.getEntrenador().getApellido() + ", " + equipo.getNombre());
+                    entrenador.getApellido() + ", " + entrenador.getNombre());
+
             System.out.println(msg);
 
             for (jugador j : equipo.getJugadores())
@@ -126,9 +129,9 @@ public final class equipoServicioImpl implements equipoServicio {
 
         if (equipo != null) {
             jugador capitan = equipo.getCapitan();
-            String msg = String.format("Equipo: %S - Entrenador: %S - Capitan: ",
+            String msg = String.format("Equipo: %s \nEntrenador: %s \nCapitan: %s",
                     equipo.getNombre(),
-                    equipo.getEntrenador().getApellido() + ", " + equipo.getNombre(),
+                    equipo.getEntrenador().getApellido() + ", " + equipo.getEntrenador().getNombre(),
                     (capitan != null ? capitan.getApellido() + ", " + capitan.getNombre() : "Sin Capitan"));
 
             System.out.println(msg);
@@ -147,7 +150,7 @@ public final class equipoServicioImpl implements equipoServicio {
 
     }
 
-    private equipo buscarEquipoXNombre(List<equipo> equipos) {
+    public equipo buscarEquipoXNombre(List<equipo> equipos) {
         Scanner sc = App.sc;
         equipo equipoEncontrado = null;
 

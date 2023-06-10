@@ -3,7 +3,6 @@ package com.futbol.domain;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class equipo {
     private String nombre;

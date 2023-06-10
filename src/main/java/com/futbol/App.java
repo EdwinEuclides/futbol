@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.futbol.Servicio.AccesoADatos.accesoADatosServicio;
+import com.futbol.Servicio.AccesoADatos.impl.accesoADatosServicioImpl;
 import com.futbol.Servicio.equipo.equipoServicio;
 import com.futbol.Servicio.equipo.impl.equipoServicioImpl;
 import com.futbol.domain.equipo;
@@ -23,6 +25,7 @@ public class App {
 
         EQUIPOS = new ArrayList<equipo>();
         equipoServicio equipoServ = new equipoServicioImpl();
+        accesoADatosServicio accDatos = new accesoADatosServicioImpl();
         EQUIPOS.add(equipoServ.crearEquipo());
 
         Menu elecc = Menu.Salir;
@@ -32,16 +35,14 @@ public class App {
             boolean eleccOk = false;
             do {
                 System.out.println("\n      ELIJA UNA ACCION (escriba el número)\n");
-                System.out.println("1 :  Crear Equipo."); // Crea equipo, sus jugadores y tecnio
-                System.out.println("2 :  Buscar Jugador."); // Busca jugador x nom. Muestra: nom, ap, pos, esCap y nom
-                                                            // de su eq.
-                System.out.println("3 :  Buscar Equipo."); // Busca Equipo x nom. Muestar nom de: eq, entr y cap
-                System.out.println("4 :  Buscar Equipo y Jugadores."); // Busca Equipo x nom. Muestra nom de eq y sus
-                                                                       // jugadores.
-                System.out.println("5 :  Eliminar Equipo."); // Elimina el equipo, sus jugadores y el tecnico.
-                System.out.println("6 :  Importar Jugadores."); // Importa la lista de jugadores de jugadores_NomEq.csv.
-                System.out.println("7 :  Exportar Jugadores."); // Exporta la lista de jugadores a Jugadores_NomEq.csv
-                System.out.println("8 :  Salir."); // Finaliza la Aplicacion.
+                System.out.println("1 :  Crear Equipo.");
+                System.out.println("2 :  Buscar Jugador y mostrar sus datos.");
+                System.out.println("3 :  Buscar Equipo y mostrar su nombre, entrenador y capitán");
+                System.out.println("4 :  Buscar Equipo y mostrar su datos y sus Jugadores.");
+                System.out.println("5 :  Eliminar Equipo.");
+                System.out.println("6 :  Importar Jugadores.");
+                System.out.println("7 :  Exportar Jugadores.");
+                System.out.println("8 :  Salir.");
 
                 if (sc.hasNextInt()) {
                     String strElegido = sc.nextLine();
@@ -70,13 +71,13 @@ public class App {
                     equipoServ.buscarEquipoCapitanEntrenadorXNom(EQUIPOS); // 4
                     break;
                 case EliminarEquipo:
-                    System.out.println("EliminarEquipo: " + elecc.toString());
+                    equipoServ.EliminarEquipo(EQUIPOS);
                     break;
                 case ImportarJugadores:
-                    System.out.println("ImportarJugadores:" + elecc.toString());
+                    accDatos.importarJugadores(EQUIPOS);
                     break;
                 case ExportarJugadores:
-                    System.out.println("ExportarJugadores: " + elecc.toString());
+                    accDatos.exportarJugadores(EQUIPOS);
                     break;
                 case Salir:
                     System.out.println("Salir: " + elecc.toString());
