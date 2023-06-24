@@ -1,23 +1,22 @@
-package com.futbol.Servicio.equipo;
+package com.futbol.servicio.equipo;
 
 import java.util.List;
+import com.futbol.domain.Equipo;
+import com.futbol.domain.Jugador;
 
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
+public interface EquipoServicio {
 
-public interface equipoServicio {
+    Equipo crearEquipo();
 
-    equipo crearEquipo();
+    void crearEquipos(List<Equipo> equipos);
 
-    void crearEquipos(List<equipo> equipos);
+    List<Jugador> crearListaJugadores(Equipo equipo);
 
-    List<jugador> crearListaJugadores(equipo equipo);
+    void buscarJugadorXNom(List<Equipo> equipos);
 
-    void buscarJugadorXNom(List<equipo> equipos);
+    void buscarEquipoJugadoresXNom(List<Equipo> equipos);
 
-    void buscarEquipoJugadoresXNom(List<equipo> equipos);
+    void buscarEquipoCapitanEntrenadorXNom(List<Equipo> equipos);
 
-    void buscarEquipoCapitanEntrenadorXNom(List<equipo> equipos);
-
-    void EliminarEquipo(List<equipo> equipos);
+    void EliminarEquipo(List<Equipo> equipos);
 }

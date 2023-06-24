@@ -1,7 +1,6 @@
-package com.futbol.Servicio.AccesoADatos.impl;
+package com.futbol.servicio.accesoADatos.impl;
 
 import org.apache.commons.io.FileUtils;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,70 +9,71 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.futbol.Servicio.AccesoADatos.accesoADatosServicio;
+import com.futbol.servicio.jugador.JugadorServicio;
+import com.futbol.servicio.jugador.impl.JugadorServicioImpl;
+import com.futbol.domain.Equipo;
+import com.futbol.servicio.accesoADatos.AccesoADatosServicio;
+import com.futbol.domain.Jugador;
 
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
-
-public class accesoADatosServicioImpl implements accesoADatosServicio {
+public class AccesoADatosServicioImpl implements AccesoADatosServicio {
 
     @Override
-    public List<jugador> importarJugadores(List<equipo> equipos) {
-        List<jugador> lstJugadores = new ArrayList<jugador>();
+    public void importarJugadores(List<Equipo> equipos) {
 
         String ruta = "src\\main\\java\\com\\futbol\\Resources\\jugadores.txt";
         try {
             List<String> lineas = FileUtils.readLines(new File(ruta), StandardCharsets.UTF_8);
-            if (lineas.size() > 0) {
+            List<Equipo> equiposIncompletos = this.getEquiposIncompletos(equipos);
 
-                String nomEq = "";// this.getEquipo(equipos, "eqnom");
-                equipo eqAct = null;
+            if (!validarParaImportar(lineas, equiposIncompletos))
+                return;
+
+            JugadorServicio jugadorServ = new JugadorServicioImpl();
+
+            for (Equipo equipo : equiposIncompletos) {
 
                 for (String linea : lineas) {
-
-                    // String nombre, String apellido, equipo equipo, int altura, int posicion, int
-                    // cantGoles, boolean esCapitan, int nroCamiseta
                     String[] sL = linea.split(";");
-                    String ap = sL[0];
-                    String nom = sL[1];
 
-                    if (!nomEq.equals(sL[2])) {
-                        nomEq = sL[2];
-                        eqAct = this.getEquipo(equipos, nomEq);
+                    if (equipo.getNombre().equals(sL[2].toString())) {
+                        String ap = sL[0].toString();
+                        String nom = sL[1].toString();
+                        int pos = Integer.parseInt(sL[3]);
+                        int h = Integer.parseInt(sL[4]);
+                        int cGoles = Integer.parseInt(sL[5]);
+                        boolean esCap = Boolean.parseBoolean(sL[6]);
+                        int nroCam = Integer.parseInt(sL[7]);
+                        Jugador j = jugadorServ.crearJugador(nom, ap, h, pos, cGoles, esCap, nroCam, equipo);
+                        equipo.getJugadores().add(j);
                     }
-
-                    int pos = Integer.parseInt(sL[3]);
-                    int h = Integer.parseInt(sL[4]);
-                    int cGoles = Integer.parseInt(sL[5]);
-                    boolean esCap = Boolean.parseBoolean(sL[6]);
-                    int nroCam = Integer.parseInt(sL[7]);
-                    jugador j = new jugador(ap, nom, eqAct, pos, h, cGoles, esCap, nroCam);
-                    lstJugadores.add(j);
+                    if (equipo.getJugadores().size() == 5)
+                        break;
                 }
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        return lstJugadores;
     }
 
     @Override
-    public void exportarJugadores(List<equipo> equipos) {
+    public void exportarJugadores(List<Equipo> equipos) {
+
+        if (equipos.size() == 0) {
+            System.out.println("No hay Equipo para exportar sus jugadores.");
+            return;
+        }
 
         String ruta = "src\\main\\java\\com\\futbol\\Resources\\jugadores.txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(ruta))) {
 
-            for (equipo equipo : equipos) {
-                for (jugador jugador : equipo.getJugadores()) {
-                    // String nombre, String apellido, equipo equipo, int altura, int posicion, int
-                    // cantGoles, boolean esCapitan, int nroCamiseta
+            for (Equipo equipo : equipos) {
+                for (Jugador jugador : equipo.getJugadores()) {
+
                     String linea = jugador.getApellido() + ";" + jugador.getNombre() + ";" + equipo.getNombre() + ";"
-                            + jugador.getAltura() +
-                            ";" + jugador.getPosicion() + ";" + jugador.getCantGoles() + ";" + jugador.getEsCapitan()
-                            + ";" + jugador.getNroCamiseta();
+                            + jugador.getAltura() + ";" + jugador.getPosicion() + ";" + jugador.getCantGoles() + ";"
+                            + jugador.getEsCapitan() + ";" + jugador.getNroCamiseta();
 
                     writer.write(linea);
                     writer.newLine();
@@ -85,10 +85,12 @@ public class accesoADatosServicioImpl implements accesoADatosServicio {
 
     }
 
-    private equipo getEquipo(List<equipo> equipos, String nombre) {
-        equipo equipoEncontrado = null;
+    // -------- Metodos Privados (funciones auxiliares de la clase)
 
-        for (equipo equipo : equipos) {
+    private Equipo getEquipo(List<Equipo> equipos, String nombre) {
+        Equipo equipoEncontrado = null;
+
+        for (Equipo equipo : equipos) {
             if (equipo.getNombre().equals(nombre)) {
                 equipoEncontrado = equipo;
                 break;
@@ -96,5 +98,26 @@ public class accesoADatosServicioImpl implements accesoADatosServicio {
         }
 
         return equipoEncontrado;
+    }
+
+    private List<Equipo> getEquiposIncompletos(List<Equipo> equipos) {
+        List<Equipo> equiposRta = new ArrayList<Equipo>();
+
+        for (Equipo equipo : equipos)
+            if (equipo.getJugadores().size() < 5)
+                equiposRta.add(equipo);
+
+        return equiposRta;
+    }
+
+    private boolean validarParaImportar(List<String> lineas, List<Equipo> equiposIncompl) {
+
+        if (lineas.size() == 0)
+            System.out.println("No hay jugadores para importar.");
+
+        if (equiposIncompl.size() == 0)
+            System.out.println("No hay ningún Equipo al que le fanten jugadores. No se puede importar");
+
+        return lineas.size() > 0 && equiposIncompl.size() > 0;
     }
 }

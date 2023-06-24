@@ -1,8 +1,12 @@
-package com.futbol.Servicio.jugador;
+package com.futbol.servicio.jugador;
 
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
+import com.futbol.domain.Equipo;
+import com.futbol.domain.Jugador;
 
-public interface jugadorServicio {
-    jugador crearJugador(equipo equipo);
+public interface JugadorServicio {
+
+    Jugador crearJugador(Equipo equipo);
+
+    Jugador crearJugador(String nombre, String apellido, int altura, int posicion, int cantGoles, boolean esCapitan,
+            int nroCamiseta, Equipo equipo);
 }

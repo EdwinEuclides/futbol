@@ -1,4 +1,4 @@
-package com.futbol.Servicio.equipo.impl;
+package com.futbol.servicio.equipo.impl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.futbol.App;
-import com.futbol.Servicio.Entrenador.entrenadorServicio;
-import com.futbol.Servicio.Entrenador.impl.entrenadorServicioImpl;
-import com.futbol.Servicio.equipo.equipoServicio;
-import com.futbol.Servicio.jugador.impl.jugadorServicioImpl;
-import com.futbol.domain.entrenador;
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
+import com.futbol.domain.Entrenador;
+import com.futbol.domain.Equipo;
+import com.futbol.domain.Jugador;
+import com.futbol.servicio.entrenador.EntrenadorServicio;
+import com.futbol.servicio.entrenador.impl.EntrenadorServicioImpl;
+import com.futbol.servicio.equipo.EquipoServicio;
+import com.futbol.servicio.jugador.impl.JugadorServicioImpl;
 
-public final class equipoServicioImpl implements equipoServicio {
+public final class EquipoServicioImpl implements EquipoServicio {
 
     @Override
-    public void crearEquipos(List<equipo> lstEquipos) {
+    public void crearEquipos(List<Equipo> lstEquipos) {
         Scanner sc = App.sc;
         boolean crearOtro = true;
         do {
@@ -30,8 +30,8 @@ public final class equipoServicioImpl implements equipoServicio {
     }
 
     @Override
-    public equipo crearEquipo() {
-        equipo equipo = new equipo();
+    public Equipo crearEquipo() {
+        Equipo equipo = new Equipo();
         Scanner sc = App.sc;
 
         System.out.println("Nombre del Equipo: ");
@@ -43,25 +43,25 @@ public final class equipoServicioImpl implements equipoServicio {
         LocalDate fechaCreacion = LocalDate.parse(strFech, formateador);
         equipo.setFechaCreacion(fechaCreacion);
 
-        entrenadorServicio entrServ = new entrenadorServicioImpl();
-        entrenador entrenador = entrServ.crearEntreandor(equipo);
+        EntrenadorServicio entrServ = new EntrenadorServicioImpl();
+        Entrenador entrenador = entrServ.crearEntreandor(equipo);
         equipo.setEntrenador(entrenador);
 
-        List<jugador> jugadoresList = this.crearListaJugadores(equipo);
+        List<Jugador> jugadoresList = this.crearListaJugadores(equipo);
         equipo.setJugadores(jugadoresList);
         return equipo;
     }
 
     @Override
-    public List<jugador> crearListaJugadores(equipo equipo) {
+    public List<Jugador> crearListaJugadores(Equipo equipo) {
         Scanner sc = App.sc;
-        List<jugador> lst = new ArrayList<jugador>();
+        List<Jugador> lst = new ArrayList<Jugador>();
         boolean salir = false;
-        jugadorServicioImpl jugadorServ = new jugadorServicioImpl();
+        JugadorServicioImpl jugadorServ = new JugadorServicioImpl();
 
         System.out.println("\nAgregará ahora los datos de los jugadores del equipo.\n");
         do {
-            jugador jugador = jugadorServ.crearJugador(equipo);
+            Jugador jugador = jugadorServ.crearJugador(equipo);
 
             if (jugador != null)
                 lst.add(jugador);
@@ -75,16 +75,16 @@ public final class equipoServicioImpl implements equipoServicio {
     }
 
     @Override
-    public void buscarJugadorXNom(List<equipo> equipos) {
-        jugador jEncontrado = null;
+    public void buscarJugadorXNom(List<Equipo> equipos) {
+        Jugador jEncontrado = null;
         Scanner sc = App.sc;
 
         System.out.println("Nombre (Apellido, Nombres) del Jugador a buscar: ");
         String nomJugado = sc.nextLine();
 
-        for (equipo equipo : equipos) {
-            List<jugador> jugadors = equipo.getJugadores();
-            for (jugador jugador : jugadors) {
+        for (Equipo equipo : equipos) {
+            List<Jugador> jugadors = equipo.getJugadores();
+            for (Jugador jugador : jugadors) {
 
                 if (nomJugado.equals(jugador.getApellido() + ", " + jugador.getNombre())) {
                     jEncontrado = jugador;
@@ -105,30 +105,30 @@ public final class equipoServicioImpl implements equipoServicio {
     }
 
     @Override
-    public void buscarEquipoJugadoresXNom(List<equipo> equipos) {
+    public void buscarEquipoJugadoresXNom(List<Equipo> equipos) {
 
-        equipo equipo = buscarEquipoXNombre(equipos);
+        Equipo equipo = buscarEquipoXNombre(equipos);
 
         if (equipo != null) {
-            entrenador entrenador = equipo.getEntrenador();
+            Entrenador entrenador = equipo.getEntrenador();
             String msg = String.format("Equipo: %S - Entrenador: %S\nJugadores\n",
                     equipo.getNombre(),
                     entrenador.getApellido() + ", " + entrenador.getNombre());
 
             System.out.println(msg);
 
-            for (jugador j : equipo.getJugadores())
+            for (Jugador j : equipo.getJugadores())
                 System.out.println(j.toString());
         } else
             System.out.println("No se encontró el Equipo");
     }
 
     @Override
-    public void buscarEquipoCapitanEntrenadorXNom(List<equipo> equipos) {
-        equipo equipo = buscarEquipoXNombre(equipos);
+    public void buscarEquipoCapitanEntrenadorXNom(List<Equipo> equipos) {
+        Equipo equipo = buscarEquipoXNombre(equipos);
 
         if (equipo != null) {
-            jugador capitan = equipo.getCapitan();
+            Jugador capitan = equipo.getCapitan();
             String msg = String.format("Equipo: %s \nEntrenador: %s \nCapitan: %s",
                     equipo.getNombre(),
                     equipo.getEntrenador().getApellido() + ", " + equipo.getEntrenador().getNombre(),
@@ -140,9 +140,9 @@ public final class equipoServicioImpl implements equipoServicio {
     }
 
     @Override
-    public void EliminarEquipo(List<equipo> equipos) {
+    public void EliminarEquipo(List<Equipo> equipos) {
 
-        equipo eqAEliminar = this.buscarEquipoXNombre(equipos);
+        Equipo eqAEliminar = this.buscarEquipoXNombre(equipos);
         if (eqAEliminar != null)
             equipos.remove(eqAEliminar);
         else
@@ -150,14 +150,14 @@ public final class equipoServicioImpl implements equipoServicio {
 
     }
 
-    public equipo buscarEquipoXNombre(List<equipo> equipos) {
+    public Equipo buscarEquipoXNombre(List<Equipo> equipos) {
         Scanner sc = App.sc;
-        equipo equipoEncontrado = null;
+        Equipo equipoEncontrado = null;
 
         System.out.println("Nombre del Equipo: ");
         String nomEquipo = sc.nextLine();
 
-        for (equipo equipo : equipos) {
+        for (Equipo equipo : equipos) {
             if (equipo.getNombre().equals(nomEquipo)) {
                 equipoEncontrado = equipo;
                 break;

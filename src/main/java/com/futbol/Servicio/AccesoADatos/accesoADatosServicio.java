@@ -1,13 +1,13 @@
-package com.futbol.Servicio.AccesoADatos;
+package com.futbol.servicio.accesoADatos;
 
 import java.util.List;
 
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
+import com.futbol.domain.Equipo;
+import com.futbol.domain.Jugador;
 
-public interface accesoADatosServicio {
+public interface AccesoADatosServicio {
 
-    List<jugador> importarJugadores(List<equipo> equipos);
+    void importarJugadores(List<Equipo> equipos);
 
-    void exportarJugadores(List<equipo> equipos);
+    void exportarJugadores(List<Equipo> equipos);
 }

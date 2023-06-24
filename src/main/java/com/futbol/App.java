@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.futbol.Servicio.AccesoADatos.accesoADatosServicio;
-import com.futbol.Servicio.AccesoADatos.impl.accesoADatosServicioImpl;
-import com.futbol.Servicio.equipo.equipoServicio;
-import com.futbol.Servicio.equipo.impl.equipoServicioImpl;
-import com.futbol.domain.equipo;
+import com.futbol.domain.Equipo;
+import com.futbol.servicio.accesoADatos.AccesoADatosServicio;
+import com.futbol.servicio.accesoADatos.impl.AccesoADatosServicioImpl;
+import com.futbol.servicio.equipo.EquipoServicio;
+import com.futbol.servicio.equipo.impl.EquipoServicioImpl;
 
 enum Menu {
     CrearEquipo, BuscarJugador, BuscarEquipo, BuscarEquipoYJugadores, EliminarEquipo, ImportarJugadores,
@@ -16,16 +16,16 @@ enum Menu {
 };
 
 public class App {
-    private static List<equipo> EQUIPOS;
+    private static List<Equipo> EQUIPOS;
 
     public static Scanner sc;
 
     public static void main(String[] args) {
         sc = new Scanner(System.in);
 
-        EQUIPOS = new ArrayList<equipo>();
-        equipoServicio equipoServ = new equipoServicioImpl();
-        accesoADatosServicio accDatos = new accesoADatosServicioImpl();
+        EQUIPOS = new ArrayList<Equipo>();
+        EquipoServicio equipoServ = new EquipoServicioImpl();
+        AccesoADatosServicio accDatos = new AccesoADatosServicioImpl();
         EQUIPOS.add(equipoServ.crearEquipo());
 
         Menu elecc = Menu.Salir;

@@ -1,21 +1,19 @@
 package com.futbol.domain;
 
-public class entrenador extends miembro {
-    
-    public entrenador(String nombre, String apellido, int edad) {
+public class Entrenador extends Miembro {
+
+    public Entrenador(String nombre, String apellido, int edad) {
         super(nombre, apellido);
         this.edad = edad;
     }
 
-    
-    public entrenador(String nombre, String apellido, int edad, equipo equipo) {
+    public Entrenador(String nombre, String apellido, int edad, Equipo equipo) {
         super(nombre, apellido, equipo);
         this.edad = edad;
     }
 
-
     private int edad;
-   
+
     public int getEdad() {
         return edad;
     }
@@ -23,5 +21,5 @@ public class entrenador extends miembro {
     public void setEdad(int edad) {
         this.edad = edad;
     }
-    
+
 }

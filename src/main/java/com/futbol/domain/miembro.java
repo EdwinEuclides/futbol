@@ -2,20 +2,20 @@ package com.futbol.domain;
 
 import java.util.UUID;
 
-public class miembro {
+public class Miembro {
     private UUID id;
     private String nombre;
     private String apellido;
-    private equipo equipo;
+    private Equipo equipo;
 
-    public miembro(String nombre, String apellido) {
+    public Miembro(String nombre, String apellido) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.apellido = apellido;
-        this.equipo = new equipo();
+        this.equipo = new Equipo();
     }
 
-    public miembro(String nombre, String apellido, equipo equipo) {
+    public Miembro(String nombre, String apellido, Equipo equipo) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.apellido = apellido;
@@ -33,6 +33,7 @@ public class miembro {
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -40,14 +41,16 @@ public class miembro {
     public String getApellido() {
         return apellido;
     }
+
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
 
-    public equipo getEquipo() {
+    public Equipo getEquipo() {
         return equipo;
     }
-    public void setEquipo(equipo equipo) {
+
+    public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
     }
 
@@ -56,6 +59,4 @@ public class miembro {
         return "miembro [nombre=" + nombre + ", apellido=" + apellido + ", equipo=" + equipo + "]";
     }
 
-    
-    
 }

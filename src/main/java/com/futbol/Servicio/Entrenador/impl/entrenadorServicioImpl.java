@@ -1,16 +1,15 @@
-package com.futbol.Servicio.Entrenador.impl;
+package com.futbol.servicio.entrenador.impl;
 
 import java.util.Scanner;
-
 import com.futbol.App;
-import com.futbol.Servicio.Entrenador.entrenadorServicio;
-import com.futbol.domain.entrenador;
-import com.futbol.domain.equipo;
+import com.futbol.domain.Entrenador;
+import com.futbol.domain.Equipo;
+import com.futbol.servicio.entrenador.EntrenadorServicio;
 
-public class entrenadorServicioImpl implements entrenadorServicio {
+public class EntrenadorServicioImpl implements EntrenadorServicio {
 
     @Override
-    public entrenador crearEntreandor(equipo equipo) {
+    public Entrenador crearEntreandor(Equipo equipo) {
         Scanner sc = App.sc;
 
         System.out.println("Apellido del Entrenador:");
@@ -32,7 +31,7 @@ public class entrenadorServicioImpl implements entrenadorServicio {
 
         } while (!edadOk);
 
-        return new entrenador(nom, ap, edad, equipo);
+        return new Entrenador(nom, ap, edad, equipo);
 
     }
 

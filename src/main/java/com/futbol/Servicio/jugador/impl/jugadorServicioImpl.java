@@ -1,16 +1,16 @@
-package com.futbol.Servicio.jugador.impl;
+package com.futbol.servicio.jugador.impl;
 
 import java.util.Scanner;
 
 import com.futbol.App;
-import com.futbol.Servicio.jugador.jugadorServicio;
-import com.futbol.domain.equipo;
-import com.futbol.domain.jugador;
+import com.futbol.domain.Equipo;
+import com.futbol.domain.Jugador;
+import com.futbol.servicio.jugador.JugadorServicio;
 
-public class jugadorServicioImpl implements jugadorServicio {
+public class JugadorServicioImpl implements JugadorServicio {
 
     @Override
-    public jugador crearJugador(equipo equipo) {
+    public Jugador crearJugador(Equipo equipo) {
         Scanner sc = App.sc;
 
         System.out.println("Apellido:");
@@ -39,9 +39,16 @@ public class jugadorServicioImpl implements jugadorServicio {
         String strNroCam = sc.nextLine();
         int nroCamiseta = Integer.parseInt(strNroCam);
 
-        jugador jugador = new jugador(nom, ap, equipo, h, pos, canGoles, esCap, nroCamiseta);
+        Jugador jugador = new Jugador(nom, ap, equipo, h, pos, canGoles, esCap, nroCamiseta);
 
         return jugador;
+    }
+
+    @Override
+    public Jugador crearJugador(String nombre, String apellido, int altura, int posicion, int cantGoles,
+            boolean esCapitan, int nroCamiseta, Equipo equipo) {
+
+        return new Jugador(nombre, apellido, equipo, altura, posicion, cantGoles, esCapitan, nroCamiseta);
     }
 
 }

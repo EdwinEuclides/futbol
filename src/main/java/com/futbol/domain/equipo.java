@@ -4,21 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class equipo {
+public class Equipo {
     private String nombre;
     private LocalDate fechaCreacion;
-    private entrenador entrenador;
-    private List<jugador> jugadores;
+    private Entrenador entrenador;
+    private List<Jugador> jugadores;
 
-    public equipo() {
-        this.jugadores = new ArrayList<jugador>();
+    public Equipo() {
+        this.jugadores = new ArrayList<Jugador>();
     }
 
-    public equipo(String nombre, LocalDate fechaCreacion, entrenador entrenador) {
+    public Equipo(String nombre, LocalDate fechaCreacion, Entrenador entrenador) {
         this.nombre = nombre;
         this.fechaCreacion = fechaCreacion;
         this.entrenador = entrenador;
-        this.jugadores = new ArrayList<jugador>();
+        this.jugadores = new ArrayList<Jugador>();
     }
 
     public String getNombre() {
@@ -37,27 +37,27 @@ public class equipo {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public entrenador getEntrenador() {
+    public Entrenador getEntrenador() {
         return entrenador;
     }
 
-    public void setEntrenador(entrenador entrenador) {
+    public void setEntrenador(Entrenador entrenador) {
         this.entrenador = entrenador;
     }
 
-    public List<jugador> getJugadores() {
+    public List<Jugador> getJugadores() {
         return jugadores;
     }
 
-    public void setJugadores(List<jugador> jugadores) {
+    public void setJugadores(List<Jugador> jugadores) {
         this.jugadores = jugadores;
     }
 
-    public boolean addJugador(jugador jugador) {
+    public boolean addJugador(Jugador jugador) {
         boolean rta = true;
 
         // Metodo para la clase service: Determinar un un jugador ya esta en la lista
-        for (jugador j : this.jugadores) {
+        for (Jugador j : this.jugadores) {
             if (jugador.getId() == j.getId()) {
                 rta = false;
                 break;
@@ -75,15 +75,15 @@ public class equipo {
         return rta;
     }
 
-    public void removeJugador(jugador jugador) {
+    public void removeJugador(Jugador jugador) {
         if (this.jugadores.contains(jugador))
             this.jugadores.remove(jugador);
     }
 
-    public jugador getCapitan() {
-        jugador jEncontr = null;
+    public Jugador getCapitan() {
+        Jugador jEncontr = null;
 
-        for (jugador jugador : jugadores) {
+        for (Jugador jugador : jugadores) {
             if (jugador.getEsCapitan()) {
                 jEncontr = jugador;
                 break;

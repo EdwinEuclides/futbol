@@ -1,6 +1,6 @@
 package com.futbol.domain;
 
-public class jugador extends miembro {
+public class Jugador extends Miembro {
 
     private int altura;
     private int posicion;
@@ -8,7 +8,7 @@ public class jugador extends miembro {
     private boolean esCapitan;
     private int nroCamiseta;
 
-    public jugador(String nombre, String apellido, int altura, int posicion, int cantGoles, boolean esCapitan,
+    public Jugador(String nombre, String apellido, int altura, int posicion, int cantGoles, boolean esCapitan,
             int nroCamiseta) {
         super(nombre, apellido);
         this.altura = altura;
@@ -18,7 +18,7 @@ public class jugador extends miembro {
         this.nroCamiseta = nroCamiseta;
     }
 
-    public jugador(String nombre, String apellido, equipo equipo, int altura, int posicion, int cantGoles,
+    public Jugador(String nombre, String apellido, Equipo equipo, int altura, int posicion, int cantGoles,
             boolean esCapitan, int nroCamiseta) {
         super(nombre, apellido, equipo);
         this.altura = altura;
@@ -96,7 +96,7 @@ public class jugador extends miembro {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        jugador other = (jugador) obj;
+        Jugador other = (Jugador) obj;
         if (this.getId() != other.getId())
             return false;
         if (altura != other.altura)

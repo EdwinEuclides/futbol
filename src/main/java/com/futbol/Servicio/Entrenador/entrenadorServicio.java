@@ -1,9 +1,9 @@
-package com.futbol.Servicio.Entrenador;
+package com.futbol.servicio.entrenador;
 
-import com.futbol.domain.entrenador;
-import com.futbol.domain.equipo;
+import com.futbol.domain.Entrenador;
+import com.futbol.domain.Equipo;
 
-public interface entrenadorServicio {
-    public entrenador crearEntreandor(equipo equipo);
+public interface EntrenadorServicio {
+    public Entrenador crearEntreandor(Equipo equipo);
 
 }
