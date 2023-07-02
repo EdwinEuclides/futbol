@@ -1,5 +1,0 @@
-Fillol;Pato;River;3;1;9;false;1
-Perfumo;Roberto;River;3;2;0;false;2
-Placente;Viejo;River;2;3;1;false;3
-Gallardo;Marcelo;River;2;4;100;true;4
-Oretega;Ariel;River;2;5;9;false;5
