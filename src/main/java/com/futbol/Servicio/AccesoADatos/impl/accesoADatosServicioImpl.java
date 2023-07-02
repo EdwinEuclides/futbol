@@ -87,19 +87,6 @@ public class AccesoADatosServicioImpl implements AccesoADatosServicio {
 
     // -------- Metodos Privados (funciones auxiliares de la clase)
 
-    private Equipo getEquipo(List<Equipo> equipos, String nombre) {
-        Equipo equipoEncontrado = null;
-
-        for (Equipo equipo : equipos) {
-            if (equipo.getNombre().equals(nombre)) {
-                equipoEncontrado = equipo;
-                break;
-            }
-        }
-
-        return equipoEncontrado;
-    }
-
     private List<Equipo> getEquiposIncompletos(List<Equipo> equipos) {
         List<Equipo> equiposRta = new ArrayList<Equipo>();
 

@@ -17,6 +17,8 @@ import com.futbol.servicio.jugador.impl.JugadorServicioImpl;
 
 public final class EquipoServicioImpl implements EquipoServicio {
 
+    private EntrenadorServicio entrenadorServicio;
+
     @Override
     public void crearEquipos(List<Equipo> lstEquipos) {
         Scanner sc = App.sc;
@@ -43,128 +45,137 @@ public final class EquipoServicioImpl implements EquipoServicio {
         LocalDate fechaCreacion = LocalDate.parse(strFech, formateador);
         equipo.setFechaCreacion(fechaCreacion);
 
-        EntrenadorServicio entrServ = new EntrenadorServicioImpl();
-        Entrenador entrenador = entrServ.crearEntreandor(equipo);
+        Entrenador entrenador = this.getEntrenadorServicio().crearEntreandor(equipo);
         equipo.setEntrenador(entrenador);
 
-        List<Jugador> jugadoresList = this.crearListaJugadores(equipo);
-        equipo.setJugadores(jugadoresList);
+        List<Jugador> listaJugadores = this.crearListaJugadores(equipo);
+        equipo.setJugadores(listaJugadores);
+
         return equipo;
     }
 
-    @Override
-    public List<Jugador> crearListaJugadores(Equipo equipo) {
+    private List<Jugador> crearListaJugadores(Equipo equipo) {
         Scanner sc = App.sc;
         List<Jugador> lst = new ArrayList<Jugador>();
         boolean salir = false;
         JugadorServicioImpl jugadorServ = new JugadorServicioImpl();
 
         System.out.println("\nAgregará ahora los datos de los jugadores del equipo.\n");
+        String siguienteJugador = "1";
         do {
             Jugador jugador = jugadorServ.crearJugador(equipo);
 
             if (jugador != null)
                 lst.add(jugador);
 
-            System.out.println("Agregar otro Jugador?    0: No      1: Si :");
-            String siguienteJugador = sc.nextLine();
-            salir = siguienteJugador.equals("0") ? true : false;
+            if (lst.size() < 5) {
+                System.out.println("Agregar otro Jugador?    0: No      1: Si :");
+                siguienteJugador = sc.nextLine();
+            }
+            salir = siguienteJugador.equals("0") || lst.size() == 5 ? true : false;
         } while (!salir);
 
         return lst;
     }
 
     @Override
-    public void buscarJugadorXNom(List<Equipo> equipos) {
-        Jugador jEncontrado = null;
+    public void buscarJugadorYMostrarSusDatos(List<Equipo> equipos) {
         Scanner sc = App.sc;
 
         System.out.println("Nombre (Apellido, Nombres) del Jugador a buscar: ");
-        String nomJugado = sc.nextLine();
+        String nombreBuscado = sc.nextLine();
 
         for (Equipo equipo : equipos) {
             List<Jugador> jugadors = equipo.getJugadores();
             for (Jugador jugador : jugadors) {
-
-                if (nomJugado.equals(jugador.getApellido() + ", " + jugador.getNombre())) {
-                    jEncontrado = jugador;
-                    break;
+                if (nombreBuscado.equals(jugador.getApellido() + ", " + jugador.getNombre())) {
+                    String msg = String.format("Apellido: %S \nNombre: %S \n%S capitán \nEquipo: %S",
+                            jugador.getApellido(),
+                            jugador.getNombre(),
+                            (jugador.getEsCapitan() ? "Es" : "No es"),
+                            jugador.getEquipo().getNombre());
+                    System.out.println(msg);
+                    return;
                 }
             }
         }
 
-        if (jEncontrado != null) {
-            String msg = String.format("Apellido: %S \nNombre: %S \n%S capitán \nEquipo: %S",
-                    jEncontrado.getApellido(),
-                    jEncontrado.getNombre(),
-                    (jEncontrado.getEsCapitan() ? "Es" : "No es"),
-                    jEncontrado.getEquipo().getNombre());
-            System.out.println(msg);
-        } else
-            System.out.println("No se encontró el jugador");
+        System.out.println("No se encontró el jugador");
     }
 
     @Override
-    public void buscarEquipoJugadoresXNom(List<Equipo> equipos) {
+    public void buscarEquipoYMostrarNombreEntrenadoCapitan(List<Equipo> equipos) {
 
-        Equipo equipo = buscarEquipoXNombre(equipos);
+        System.out.println("Nombre del Equipo Buscado: ");
+        String nombreEquipo = App.sc.nextLine();
+        Equipo equipo = buscarEquipo(equipos, nombreEquipo);
 
-        if (equipo != null) {
-            Entrenador entrenador = equipo.getEntrenador();
-            String msg = String.format("Equipo: %S - Entrenador: %S\nJugadores\n",
-                    equipo.getNombre(),
-                    entrenador.getApellido() + ", " + entrenador.getNombre());
-
-            System.out.println(msg);
-
-            for (Jugador j : equipo.getJugadores())
-                System.out.println(j.toString());
-        } else
+        if (equipo == null) {
             System.out.println("No se encontró el Equipo");
+            return;
+        }
+
+        Jugador capitan = equipo.getCapitan();
+        String msg = String.format("Equipo: %s \nEntrenador: %s \nCapitan: %s",
+                equipo.getNombre(),
+                equipo.getEntrenador().getApellido() + ", " + equipo.getEntrenador().getNombre(),
+                (capitan != null ? capitan.getApellido() + ", " + capitan.getNombre() : "Sin Capitan"));
+
+        System.out.println(msg);
     }
 
     @Override
-    public void buscarEquipoCapitanEntrenadorXNom(List<Equipo> equipos) {
-        Equipo equipo = buscarEquipoXNombre(equipos);
+    public void buscarEquipoMostrarSusDatosYJugadores(List<Equipo> equipos) {
 
-        if (equipo != null) {
-            Jugador capitan = equipo.getCapitan();
-            String msg = String.format("Equipo: %s \nEntrenador: %s \nCapitan: %s",
-                    equipo.getNombre(),
-                    equipo.getEntrenador().getApellido() + ", " + equipo.getEntrenador().getNombre(),
-                    (capitan != null ? capitan.getApellido() + ", " + capitan.getNombre() : "Sin Capitan"));
+        Scanner sc = App.sc;
+        System.out.println("Nombre del Equipo Buscado: ");
+        String nombreEquipo = sc.nextLine();
 
-            System.out.println(msg);
-        } else
+        Equipo equipo = buscarEquipo(equipos, nombreEquipo);
+
+        if (equipo == null) {
             System.out.println("No se encontró el Equipo");
+            return;
+        }
+
+        Entrenador entrenador = equipo.getEntrenador();
+        String msg = String.format("Equipo: %S - Entrenador: %S\nJugadores\n",
+                equipo.getNombre(),
+                entrenador.getApellido() + ", " + entrenador.getNombre());
+
+        System.out.println(msg);
+
+        for (Jugador jugador : equipo.getJugadores())
+            System.out.println(jugador.toString());
     }
 
     @Override
     public void EliminarEquipo(List<Equipo> equipos) {
+        System.out.println("Nombre del Equipo a Eliminar: ");
+        String nombreEquipo = App.sc.nextLine();
 
-        Equipo eqAEliminar = this.buscarEquipoXNombre(equipos);
-        if (eqAEliminar != null)
-            equipos.remove(eqAEliminar);
+        Equipo equipoAEliminar = this.buscarEquipo(equipos, nombreEquipo);
+        if (equipoAEliminar != null)
+            equipos.remove(equipoAEliminar);
         else
             System.out.println("Equipo no encontrado.");
 
     }
 
-    public Equipo buscarEquipoXNombre(List<Equipo> equipos) {
-        Scanner sc = App.sc;
-        Equipo equipoEncontrado = null;
-
-        System.out.println("Nombre del Equipo: ");
-        String nomEquipo = sc.nextLine();
+    private Equipo buscarEquipo(List<Equipo> equipos, String nombreEquipo) {
 
         for (Equipo equipo : equipos) {
-            if (equipo.getNombre().equals(nomEquipo)) {
-                equipoEncontrado = equipo;
-                break;
+            if (equipo.getNombre().equals(nombreEquipo)) {
+                return equipo;
             }
         }
 
-        return equipoEncontrado;
+        return null;
+    }
+
+    public EntrenadorServicio getEntrenadorServicio() {
+        entrenadorServicio = new EntrenadorServicioImpl();
+        return entrenadorServicio;
     }
 
 }

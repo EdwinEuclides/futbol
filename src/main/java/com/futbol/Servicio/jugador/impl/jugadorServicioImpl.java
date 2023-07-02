@@ -11,6 +11,7 @@ public class JugadorServicioImpl implements JugadorServicio {
 
     @Override
     public Jugador crearJugador(Equipo equipo) {
+
         Scanner sc = App.sc;
 
         System.out.println("Apellido:");

@@ -37,7 +37,7 @@ public class App {
                 System.out.println("\n      ELIJA UNA ACCION (escriba el número)\n");
                 System.out.println("1 :  Crear Equipo.");
                 System.out.println("2 :  Buscar Jugador y mostrar sus datos.");
-                System.out.println("3 :  Buscar Equipo y mostrar su nombre, entrenador y capitán");
+                System.out.println("3 :  Buscar Equipo y mostrar su nombre, el entrenador y el capitán");
                 System.out.println("4 :  Buscar Equipo y mostrar su datos y sus Jugadores.");
                 System.out.println("5 :  Eliminar Equipo.");
                 System.out.println("6 :  Importar Jugadores.");
@@ -62,13 +62,13 @@ public class App {
                     equipoServ.crearEquipos(EQUIPOS); // 1
                     break;
                 case BuscarJugador:
-                    equipoServ.buscarJugadorXNom(EQUIPOS); // 2
+                    equipoServ.buscarJugadorYMostrarSusDatos(EQUIPOS); // 2
                     break;
                 case BuscarEquipo:
-                    equipoServ.buscarEquipoJugadoresXNom(EQUIPOS); // 3
+                    equipoServ.buscarEquipoYMostrarNombreEntrenadoCapitan(EQUIPOS); // 3
                     break;
                 case BuscarEquipoYJugadores:
-                    equipoServ.buscarEquipoCapitanEntrenadorXNom(EQUIPOS); // 4
+                    equipoServ.buscarEquipoMostrarSusDatosYJugadores(EQUIPOS); // 4
                     break;
                 case EliminarEquipo:
                     equipoServ.EliminarEquipo(EQUIPOS);
